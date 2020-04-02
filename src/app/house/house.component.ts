@@ -9,7 +9,7 @@ export class HouseComponent implements OnInit {
   loading = false;
   error = '';
   houses: House[];
-  bodyText: string;
+  houseId: string;
 
   constructor(private houseService: HouseService, private modalService: ModalService) {
   }
@@ -26,11 +26,10 @@ export class HouseComponent implements OnInit {
         this.loading = false;
       }
     );
-
-    this.bodyText = 'This text can be updated in modal 1';
   }
 
   openModal(id: string) {
+    this.houseId = id;
     this.modalService.open(id);
   }
 

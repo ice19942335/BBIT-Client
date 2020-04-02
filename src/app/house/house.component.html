@@ -1,20 +1,20 @@
-<div>
-  <h1>Home</h1>
-  <p>{{bodyText}}</p>
-  <button (click)="openModal('custom-modal-1')">Open Modal 1</button>
-  <button (click)="openModal('custom-modal-2')">Open Modal 2</button>
-</div>
+<!--<div>-->
+<!--  <h1>Home</h1>-->
+<!--  <p>{{bodyText}}</p>-->
+<!--  <button (click)="openModal('custom-modal-1')">Open Modal 1</button>-->
+<!--  <button (click)="openModal('custom-modal-2')">Open Modal 2</button>-->
+<!--</div>-->
 
-<jw-modal id="custom-modal-1">
-  <h1>A Custom Modal!</h1>
-  <p>Home page text: </p><input type="text" [(ngModel)]="bodyText" />
-  <button (click)="closeModal('custom-modal-1');">Close</button>
-</jw-modal>
+<!--<jw-modal id="custom-modal-1">-->
+<!--  <h1>A Custom Modal!</h1>-->
+<!--  <p>Home page text: </p><input type="text" [(ngModel)]="bodyText" />-->
+<!--  <button (click)="closeModal('custom-modal-1');">Close</button>-->
+<!--</jw-modal>-->
 
-<jw-modal id="custom-modal-2">
-  <h1 style="height:1000px">A Tall Custom Modal!</h1>
-  <button (click)="closeModal('custom-modal-2');">Close</button>
-</jw-modal>
+<!--<jw-modal id="custom-modal-2">-->
+<!--  <h1 style="height:1000px">A Tall Custom Modal!</h1>-->
+<!--  <button (click)="closeModal('custom-modal-2');">Close</button>-->
+<!--</jw-modal>-->
 
 <div class="card mt-4">
     <h4 class="card-header text-center">BBIT Houses</h4>
@@ -30,9 +30,14 @@
                 <span class="font-weight-bold">City:</span> {{house.city}}<br>
                 <span class="font-weight-bold">Country:</span> {{house.country}}<br>
                 <span class="font-weight-bold">Post code:</span> {{house.postCode}}<br>
-                <a class="btn btn-success mr-3 mt-3" [routerLink]="['/house',house.id]">Edit</a>
+                <a class="btn btn-success mr-3 mt-3" (click)="openModal(house.id)">Edit</a>
                 <a class="btn btn-danger mt-3" [routerLink]="['тут путь до API',house.id]">Delete</a>
               </div>
+              <jw-modal [id]="house.id">
+                <h1>A Custom Modal!</h1>
+                <p>Home page text: </p><input type="text" [(ngModel)]="houseId" />
+                <button (click)="closeModal(house.id);">Close</button>
+              </jw-modal>
             </div>
         </div>
         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
