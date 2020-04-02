@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {first} from 'rxjs/operators';
 
-import {House} from '@app/_models';
-import {HouseService, ModalService} from '@app/_services';
+import {House} from '../_models';
+import {HouseService, ModalService} from '../_services';
 
 @Component({templateUrl: 'house.component.html'})
 export class HouseComponent implements OnInit {

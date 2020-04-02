@@ -3,7 +3,7 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { AuthenticationService } from '@app/_services';
+import { AuthenticationService } from '../_services';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -16,11 +16,11 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.authenticationService.logout();
                 location.reload(true);
             } else if (err.status === 400) {
-                return throwError(err.error.errors.join(', '))
+                return throwError(err.error.errors.join(', '));
             }
 
             const error = err.error.message || err.statusText;
             return throwError(error);
-        }))
+        }));
     }
 }

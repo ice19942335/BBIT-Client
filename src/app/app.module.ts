@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ModalModule } from './_modal/modal.module';
 
 import { AppComponent } from './app.component';
@@ -13,7 +12,7 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { HouseComponent } from './house';
-import { HouseDetailsComponent } from '@app/houseDetails';
+import { HouseDetailsComponent } from './houseDetails';
 
 
 @NgModule({

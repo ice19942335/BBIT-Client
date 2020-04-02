@@ -1,8 +1,9 @@
 import { Component, ViewEncapsulation, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
 
-import { ModalService } from '@app/_services';
+import { ModalService } from '../_services';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'jw-modal',
   templateUrl: 'modal.component.html',
   styleUrls: ['modal.component.less'],
@@ -10,7 +11,7 @@ import { ModalService } from '@app/_services';
 })
 export class ModalComponent implements OnInit, OnDestroy {
   @Input() id: string;
-  private element: any;
+  private readonly element: any;
 
   constructor(private modalService: ModalService, private el: ElementRef) {
     this.element = el.nativeElement;

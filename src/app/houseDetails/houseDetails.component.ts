@@ -1,19 +1,19 @@
-import { Component, Input } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { first } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
-import { House } from '@app/_models';
-import { HouseService } from '@app/_services';
+import { House } from '../_models';
+import { HouseService } from '../_services';
 
 @Component({ templateUrl: 'houseDetails.component.html' })
-export class HouseDetailsComponent {
+export class HouseDetailsComponent implements OnInit{
     loading = false;
     error = '';
     id: string;
     house: House;
-   
-    constructor(private houseService: HouseService, private route: ActivatedRoute) { 
-        this.id = this.route.snapshot.params['id'];
+
+    constructor(private houseService: HouseService, private route: ActivatedRoute) {
+        this.id = this.route.snapshot.params.id;
     }
 
     ngOnInit() {
@@ -22,7 +22,6 @@ export class HouseDetailsComponent {
             data => {
                 this.loading = false;
                 this.house = data.house;
-                //console.log(this.house);
             },
             error => {
                 this.error = error;
