@@ -52,6 +52,7 @@ export class HouseComponent implements OnInit {
     // );
 
     this.editProfileForm = this.fb.group({
+      id: [''],
       firstname: [''],
       lastname: [''],
       username: [''],
@@ -66,6 +67,7 @@ export class HouseComponent implements OnInit {
     });
 
     this.editProfileForm.patchValue({
+      id: user.id,
       firstname: user.firstname,
       lastname: user.lastname,
       username: user.username,
@@ -74,6 +76,14 @@ export class HouseComponent implements OnInit {
   }
   onSubmit() {
     this.modalService.dismissAll();
-    console.log("res:", this.editProfileForm.getRawValue());
+    const formData = this.editProfileForm.getRawValue();
+    const user = this.userList.find(x => x.id === formData.id);
+
+    const index = this.userList.indexOf(user);
+
+    if (index !== -1) {
+      this.userList[index] = formData;
+      console.log(formData);
+    }
   }
 }
