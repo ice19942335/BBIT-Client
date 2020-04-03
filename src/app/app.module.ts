@@ -3,16 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { ModalModule } from './_modal/modal.module';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { appRoutingModule } from './app.routing';
-
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { HouseComponent } from './house';
-import { HouseDetailsComponent } from './houseDetails';
+
 
 
 @NgModule({
@@ -22,14 +20,13 @@ import { HouseDetailsComponent } from './houseDetails';
     HttpClientModule,
     appRoutingModule,
     FormsModule,
-    ModalModule
+    NgbModule
   ],
     declarations: [
         AppComponent,
         HomeComponent,
         LoginComponent,
-        HouseComponent,
-        HouseDetailsComponent
+        HouseComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
