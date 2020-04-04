@@ -59,8 +59,6 @@ export class HouseComponent implements OnInit {
     const house = this.houses.find(x => x.id === houseFromForm.id);
 
     this.houseService.updateHouse(houseFromForm).pipe(first()).subscribe(data => {
-        console.log(data);
-        console.log(data.status);
         this.loading = false;
         if (data.status === true) {
           this.updateLocalHouses(house, houseFromForm);

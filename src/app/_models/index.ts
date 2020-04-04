@@ -2,3 +2,4 @@
 export * from './house';
 export * from './Response/allHousesResponse';
 export * from './Response/updateHouseResponse';
+export * from './Response/houseFlatsResponse';
