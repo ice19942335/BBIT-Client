@@ -11,8 +11,6 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { HouseComponent } from './house';
 
-
-
 @NgModule({
   imports: [
     BrowserModule,

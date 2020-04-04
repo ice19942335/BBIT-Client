@@ -9,81 +9,87 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 @Component({templateUrl: 'house.component.html'})
 export class HouseComponent implements OnInit {
   houses: House[];
-  title = 'modal2';
-  editProfileForm: FormGroup;
+  house: House;
+  apiResponseStatus: boolean;
+  editHouseForm: FormGroup;
+  loading: boolean;
+  error: '';
 
-  userList = [
-    {
-      id: "1",
-      firstname: "Aiman",
-      lastname: "Rahmat",
-      username: "aimanrahmat",
-      email: "aimanrahmat@gmail.com"
-    },
-    {
-      id: "2",
-      firstname: "Christiano",
-      lastname: "Ronaldo",
-      username: "ronaldo7",
-      email: "ronaldo7@gmail.com"
-    },
-    {
-      id: "3",
-      firstname: "Wayne",
-      lastname: "Rooney",
-      username: "rooney8",
-      email: "rooney8@gmail.com"
-    }];
-
-  constructor(private houseService: HouseService, private fb: FormBuilder, private modalService: NgbModal) {
+  constructor(private houseService: HouseService, private formBuilder: FormBuilder, private modalService: NgbModal) {
   }
 
   ngOnInit() {
-    // this.loading = true;
-    // this.houseService.getAll().pipe(first()).subscribe(
-    //   data => {
-    //     this.loading = false;
-    //     this.houses = data.houses;
-    //   },
-    //   error => {
-    //     this.error = error;
-    //     this.loading = false;
-    //   }
-    // );
-
-    this.editProfileForm = this.fb.group({
+    this.loading = true;
+    this.loadHouses();
+    this.editHouseForm = this.formBuilder.group({
       id: [''],
-      firstname: [''],
-      lastname: [''],
-      username: [''],
-      email: ['']
+      houseNumber: ['number'],
+      streetName: [''],
+      city: [''],
+      country: [''],
+      postCode: ['']
     });
   }
 
-  openModal(targetModal, user) {
+  openModal(targetModal, house) {
     this.modalService.open(targetModal, {
       centered: true,
       backdrop: 'static'
     });
 
-    this.editProfileForm.patchValue({
-      id: user.id,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      username: user.username,
-      email: user.email
+    this.editHouseForm.patchValue({
+      id: house.id,
+      houseNumber: house.houseNumber,
+      streetName: house.streetName,
+      city: house.city,
+      country: house.country,
+      postCode: house.postCode
     });
   }
+
   onSubmit() {
     this.modalService.dismissAll();
-    const formData = this.editProfileForm.getRawValue();
-    const user = this.userList.find(x => x.id === formData.id);
+    const houseFromForm = this.editHouseForm.getRawValue();
+    const house = this.houses.find(x => x.id === houseFromForm.id);
 
-    const index = this.userList.indexOf(user);
+    this.houseService.updateHouse(houseFromForm).pipe(first()).subscribe(data => {
+        console.log(data);
+        console.log(data.status);
+        this.loading = false;
+        if (data.status === true) {
+          this.updateLocalHouses(house, houseFromForm);
+        }
+      },
+      error => {
+        this.error = error;
+        this.loading = false;
+    });
 
-    if (index !== -1) {
-      this.userList[index] = formData;
-      console.log(formData);
+    this.apiResponseStatus = undefined;
+  }
+
+  loadHouses() {
+    this.houseService.getAllHouses().pipe(first()).subscribe(
+      data => {
+        this.loading = false;
+        this.apiResponseStatus = data.status;
+        if (this.apiResponseStatus) {
+          this.houses = data.houses;
+          this.apiResponseStatus = false;
+        }
+      },
+      error => {
+        this.error = error;
+        this.loading = false;
+      });
+  }
+
+  updateLocalHouses(houseToReplace: House, newHouse: House) {
+    const index = this.houses.indexOf(houseToReplace);
+    if (index === -1) {
+      return;
     }
+
+    this.houses[index] = newHouse;
   }
 }

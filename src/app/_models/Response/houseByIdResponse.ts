@@ -1,6 +1,6 @@
-import { House } from '../house'
+import { House } from '../house';
 
 export class HouseByIdResponse {
     status: boolean;
-    house: House
+    house: House;
 }

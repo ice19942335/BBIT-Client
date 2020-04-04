@@ -1,106 +1,83 @@
-<!--<div class="card mt-4">-->
-<!--    <h4 class="card-header text-center">BBIT Houses</h4>-->
-<!--    <div class="card-body">-->
-<!--        <h6 class="text-center">Use manipulation buttons to manage Houses</h6>-->
-<!--        <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>-->
-<!--        <div *ngIf="houses">-->
-<!--            <div class="card mt-4" *ngFor="let house of houses">-->
-<!--                <h5 class="card-header">Id:{{house.id}}</h5>-->
-<!--              <div class="card-body">-->
-<!--                <span class="font-weight-bold">House number: </span> {{house.houseNumber}}<br>-->
-<!--                <span class="font-weight-bold">Street name:</span> {{house.streetName}}<br>-->
-<!--                <span class="font-weight-bold">City:</span> {{house.city}}<br>-->
-<!--                <span class="font-weight-bold">Country:</span> {{house.country}}<br>-->
-<!--                <span class="font-weight-bold">Post code:</span> {{house.postCode}}<br>-->
-<!--                <a class="btn btn-success mr-3 mt-3" (click)="openModal(house.id)">Edit</a>-->
-<!--                <a class="btn btn-danger mt-3" [routerLink]="['тут путь до API',house.id]">Delete</a>-->
-<!--              </div>-->
-<!--              <jw-modal [id]="house.id">-->
-<!--                <h1>A Custom Modal!</h1>-->
-<!--                <p>Home page text: </p><input type="text" [(ngModel)]="houseId" />-->
-<!--                <button (click)="closeModal(house.id);">Close</button>-->
-<!--              </jw-modal>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-12 py-4 text-center">
-      <h1>List of Users</h1>
+<div class="card mt-4">
+  <h4 class="card-header text-center">BBIT Houses</h4>
+  <div class="card-body">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-12 py-4">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th hidden scope="col">#</th>
+              <th scope="col">House Number</th>
+              <th scope="col">Street Name</th>
+              <th scope="col">City</th>
+              <th scope="col">Country</th>
+              <th scope="col">Post-Code</th>
+              <th scope="col">Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
+            <tr *ngFor="let house of houses">
+              <td hidden>{{ house.id }}</td>
+              <td>{{ house.houseNumber }}</td>
+              <td>{{ house.streetName }}</td>
+              <td>{{ house.city }}</td>
+              <td>{{ house.country }}</td>
+              <td>{{ house.postCode }}</td>
+              <td>
+                <button type="button" class="btn btn-primary" (click)="openModal(editHouseModal, house)">Edit</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="row justify-content-center">
-    <div class="col-md-12 py-4">
-      <table class="table table-striped">
-        <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">First Name</th>
-          <th scope="col">Last Name</th>
-          <th scope="col">Username</th>
-          <th scope="col">Email</th>
-          <th scope="col">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let user of userList">
-          <th scope="row">{{ user.id }}</th>
-          <td>{{ user.firstname }}</td>
-          <td>{{ user.lastname }}</td>
-          <td>{{ user.username }}</td>
-          <td>{{ user.email }}</td>
-          <td>
-            <button type="button" class="btn btn-primary" (click)="openModal(editProfileModal, user)">Edit</button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
   </div>
 </div>
-<ng-template #editProfileModal let-modal>
+
+<ng-template #editHouseModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="editProfileLabel">Edit Profile</h5>
+    <h5 class="modal-title" id="editProfileLabel">Edit House</h5>
     <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
   <div class="modal-body">
-    <form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()">
-<!--      <div class="form-group row">-->
-<!--        <label for="identifier" class="col-sm-4 col-form-label">Id</label>-->
-<!--        <div class="col-sm-8">-->
-<!--          <input type="text" class="form-control" formControlName="id" id="identifier">-->
-<!--        </div>-->
-<!--      </div>-->
+    <form [formGroup]="editHouseForm" (ngSubmit)="onSubmit()">
       <div class="form-group row">
-        <label for="firstname" class="col-sm-4 col-form-label">First Name</label>
+        <label for="houseNumber" class="col-sm-4 col-form-label">House Number</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" formControlName="firstname" id="firstname">
+          <input type="text" class="form-control" formControlName="houseNumber" id="houseNumber">
         </div>
       </div>
       <div class="form-group row">
-        <label for="lastname" class="col-sm-4 col-form-label">Last Name</label>
+        <label for="streetName" class="col-sm-4 col-form-label">Street Name</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" formControlName="lastname" id="lastname">
+          <input type="text" class="form-control" formControlName="streetName" id="streetName">
         </div>
       </div>
       <div class="form-group row">
-        <label for="username" class="col-sm-4 col-form-label">Username</label>
+        <label for="city" class="col-sm-4 col-form-label">City</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" formControlName="username" id="username">
+          <input type="text" class="form-control" formControlName="city" id="city">
         </div>
       </div>
       <div class="form-group row">
-        <label for="email" class="col-sm-4 col-form-label">Email</label>
+        <label for="country" class="col-sm-4 col-form-label">Country</label>
         <div class="col-sm-8">
-          <input type="email" class="form-control" formControlName="email" id="email">
+          <input type="text" class="form-control" formControlName="country" id="country">
         </div>
       </div>
+      <div class="form-group row">
+          <label for="postCode" class="col-sm-4 col-form-label">Post-Code</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="postCode" id="postCode">
+          </div>
+        </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
         <button type="submit" class="btn btn-primary">Save changes</button>

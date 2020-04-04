@@ -1,6 +1,6 @@
 export class House {
     id: string;
-    houseNumber: number;
+    houseNumber: string;
     streetName: string;
     city: string;
     country: string;
