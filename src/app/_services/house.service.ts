@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 
 import {environment} from '../../environments/environment';
 import {AllHousesResponse, House, HouseFlatsResponse} from '../_models';
-import {HouseByIdResponse} from '../_models/Response/houseByIdResponse';
+import {HouseByIdResponse} from '../_models/Response/House/houseByIdResponse';
 import {UpdateHouseResponse} from '../_models';
 
 @Injectable({providedIn: 'root'})
@@ -19,7 +19,7 @@ export class HouseService {
   }
 
   getHouseFlats(id: string) {
-    return this.http.get<HouseFlatsResponse>(`${environment.apiUrl}flatsInHouses/${id}`);
+    return this.http.get<HouseFlatsResponse>(`${environment.apiUrl}houseFlats/${id}`);
   }
 
   updateHouse(house: House) {

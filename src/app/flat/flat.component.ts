@@ -1,18 +1,17 @@
 import {Component, OnInit} from '@angular/core';
+import {House, User} from '../_models';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {AuthenticationService, HouseService} from '../_services';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {first} from 'rxjs/operators';
 
-import {House, User} from '../_models';
-import {AuthenticationService, HouseService} from '../_services';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-
-@Component({templateUrl: 'house.component.html'})
-export class HouseComponent implements OnInit {
+@Component({templateUrl: 'flat.component.html'})
+export class FlatComponent implements OnInit {
   currentUser: User;
-  houses: House[];
+  flats: House[];
   house: House;
   apiResponseStatus: boolean;
-  editHouseForm: FormGroup;
+  editFlatForm: FormGroup;
   loading: boolean;
   error: '';
 
@@ -26,7 +25,7 @@ export class HouseComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.loadHouses();
-    this.editHouseForm = this.formBuilder.group({
+    this.editFlatForm = this.formBuilder.group({
       id: [''],
       houseNumber: [''],
       streetName: [''],
@@ -36,19 +35,30 @@ export class HouseComponent implements OnInit {
     });
   }
 
-  openModal(targetModal, house) {
+  openModal(targetModal, flat) {
     this.modalService.open(targetModal, {
       centered: true,
       backdrop: 'static'
     });
 
-    this.editHouseForm.patchValue({
-      id: house.id,
-      houseNumber: house.houseNumber,
-      streetName: house.streetName,
-      city: house.city,
-      country: house.country,
-      postCode: house.postCode
+    // id: string;
+    // flatNumber: string;
+    // floor: number;
+    // amountOfRooms: number;
+    // amountOfTenants: number;
+    // totalArea: number;
+    // houseRoom: number;
+    // house: House;
+
+    this.editFlatForm.patchValue({
+      id: flat.id,
+      flatNumber: flat.flatNumber,
+      floor: flat.level,
+      amountOfRooms: flat.amountOfRooms,
+      amountOfTenants: flat.amountOfTenants,
+      totalArea: flat.totalArea,
+      houseRoom: flat.houseRoom,
+      house: flat.house
     });
   }
 
@@ -66,7 +76,7 @@ export class HouseComponent implements OnInit {
       error => {
         this.error = error;
         this.loading = false;
-    });
+      });
 
     this.apiResponseStatus = undefined;
   }
@@ -95,4 +105,5 @@ export class HouseComponent implements OnInit {
 
     this.houses[index] = newHouse;
   }
+
 }

@@ -11,6 +11,7 @@ import {HomeComponent} from './home';
 import {LoginComponent} from './login';
 import {HouseComponent} from './house';
 import {HouseFlatsComponent} from './houseFlats/houseFlats.component';
+import {FlatComponent} from './flat/flat.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import {HouseFlatsComponent} from './houseFlats/houseFlats.component';
     HomeComponent,
     LoginComponent,
     HouseComponent,
-    HouseFlatsComponent
+    HouseFlatsComponent,
+    FlatComponent
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

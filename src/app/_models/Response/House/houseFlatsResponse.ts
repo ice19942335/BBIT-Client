@@ -1,4 +1,4 @@
-import {Flat} from '../flat';
+import {Flat} from '../../flat';
 
 export class HouseFlatsResponse {
   status: boolean;

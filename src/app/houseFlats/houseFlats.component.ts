@@ -51,13 +51,12 @@ export class HouseFlatsComponent implements OnInit{
         if (this.flatsResponseStatus) {
           this.flats = data.flats;
           this.flatsResponseStatus = false;
+          console.log(this.flats);
         }
       },
       error => {
         this.houseFlatsError = error;
         this.houseFlatsLoading = false;
       });
-
-    console.log(this.flats);
   }
 }

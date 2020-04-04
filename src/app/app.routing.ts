@@ -5,11 +5,13 @@ import { LoginComponent } from './login';
 import { HouseComponent } from './house';
 import { AuthGuard } from './_helpers';
 import {HouseFlatsComponent} from './houseFlats/houseFlats.component';
+import {FlatComponent} from './flat/flat.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'house', component: HouseComponent },
-    { path: 'flatsInHouse/:id', component: HouseFlatsComponent },
+    { path: 'houseFlats/:id', component: HouseFlatsComponent },
+    { path: 'flat', component: FlatComponent },
     { path: 'login', component: LoginComponent },
 
     // Example { path: 'flatsInHouse/:id', component: HouseFlatsComponent, canActivate: [AuthGuard] },
