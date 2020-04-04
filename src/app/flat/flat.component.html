@@ -1,5 +1,5 @@
 <div class="card mt-4">
-  <h4 class="card-header text-center">Flat manager</h4>
+  <h4 class="card-header text-center">UpdateFlatRequest manager</h4>
   <div class="card-body">
     <div class="container">
       <div class="row justify-content-center">
@@ -8,29 +8,31 @@
             <thead>
             <tr>
               <th hidden scope="col"></th>
-              <th scope="col">House Number</th>
-              <th scope="col">Street Name</th>
-              <th scope="col">City</th>
-              <th scope="col">Country</th>
-              <th scope="col">Post-Code</th>
-              <th scope="col">Flats In House</th>
-              <th *ngIf="currentUser" scope="col">Edit House</th>
+              <th scope="col">Flat Number</th>
+              <th scope="col">Floor</th>
+              <th scope="col">Rooms</th>
+              <th scope="col">Tenants</th>
+              <th scope="col">Total Area</th>
+              <th scope="col">House Room</th>
+              <th scope="col">View tenants</th>
+              <th *ngIf="currentUser" scope="col">Edit Flat</th>
             </tr>
             </thead>
             <tbody>
             <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
-            <tr *ngFor="let house of flats">
-              <td hidden>{{ house.id }}</td>
-              <td>{{ house.houseNumber }}</td>
-              <td>{{ house.streetName }}</td>
-              <td>{{ house.city }}</td>
-              <td>{{ house.country }}</td>
-              <td>{{ house.postCode }}</td>
+            <tr *ngFor="let flat of flats">
+              <td hidden>{{ flat.id }}</td>
+              <td>{{ flat.flatNumber }}</td>
+              <td>{{ flat.level }}</td>
+              <td>{{ flat.amountOfRooms }}</td>
+              <td>{{ flat.amountOfTenants }}</td>
+              <td>{{ flat.totalArea }}</td>
+              <td>{{ flat.houseRoom }}</td>
               <td>
-                <a type="button" class="btn btn-success" [routerLink]="['/houseFlats', house.id]">View flats</a>
+                <a type="button" class="btn btn-success" [routerLink]="['/flatTenants', flat.id]">View tenants</a>
               </td>
               <td *ngIf="currentUser">
-                <button type="button" class="btn btn-primary" (click)="openModal(editHouseModal, house)">Edit house</button>
+                <button type="button" class="btn btn-primary" (click)="openModal(editFlatModal, flat)">Edit flat</button>
               </td>
             </tr>
             </tbody>
@@ -42,44 +44,50 @@
   </div>
 </div>
 
-<ng-template #editHouseModal let-modal>
+<ng-template #editFlatModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="editProfileLabel">Edit House</h5>
+    <h5 class="modal-title" id="editProfileLabel">Edit UpdateFlatRequest</h5>
     <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
 
   <div class="modal-body">
-    <form [formGroup]="editHouseForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="editFlatForm" (ngSubmit)="onSubmit()">
       <div class="form-group row">
-        <label for="houseNumber" class="col-sm-4 col-form-label">House Number</label>
+        <label for="flatNumber" class="col-sm-4 col-form-label">Flat Number</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" formControlName="houseNumber" id="houseNumber">
+          <input type="text" class="form-control" formControlName="flatNumber" id="flatNumber">
         </div>
       </div>
       <div class="form-group row">
-        <label for="streetName" class="col-sm-4 col-form-label">Street Name</label>
+        <label for="level" class="col-sm-4 col-form-label">Floor</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" formControlName="streetName" id="streetName">
+          <input type="number" class="form-control" formControlName="level" id="level">
         </div>
       </div>
       <div class="form-group row">
-        <label for="city" class="col-sm-4 col-form-label">City</label>
+        <label for="amountOfRooms" class="col-sm-4 col-form-label">Rooms</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" formControlName="city" id="city">
+          <input type="number" class="form-control" formControlName="amountOfRooms" id="amountOfRooms">
         </div>
       </div>
       <div class="form-group row">
-        <label for="country" class="col-sm-4 col-form-label">Country</label>
+        <label for="amountOfTenants" class="col-sm-4 col-form-label">Tenants</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" formControlName="country" id="country">
+          <input type="number" class="form-control" formControlName="amountOfTenants" id="amountOfTenants">
         </div>
       </div>
       <div class="form-group row">
-        <label for="postCode" class="col-sm-4 col-form-label">Post-Code</label>
+        <label for="totalArea" class="col-sm-4 col-form-label">Total Area</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" formControlName="postCode" id="postCode">
+          <input type="number" class="form-control" formControlName="totalArea" id="totalArea">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="houseRoom" class="col-sm-4 col-form-label">House Room</label>
+        <div class="col-sm-8">
+          <input type="number" class="form-control" formControlName="houseRoom" id="houseRoom">
         </div>
       </div>
       <div class="modal-footer">

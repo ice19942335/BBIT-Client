@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 
 import {environment} from '../../environments/environment';
 import {AllFlatsResponse} from '../_models/Response/Flat/allFlatsResponse';
+import {Flat} from '../_models';
 
 
 
