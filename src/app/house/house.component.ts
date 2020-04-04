@@ -1,13 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {first} from 'rxjs/operators';
 
-import {House} from '../_models';
-import {HouseService, ModalService} from '../_services';
+import {House, User} from '../_models';
+import {AuthenticationService, HouseService} from '../_services';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Router} from '@angular/router';
 
 @Component({templateUrl: 'house.component.html'})
 export class HouseComponent implements OnInit {
+  currentUser: User;
   houses: House[];
   house: House;
   apiResponseStatus: boolean;
@@ -15,7 +17,11 @@ export class HouseComponent implements OnInit {
   loading: boolean;
   error: '';
 
-  constructor(private houseService: HouseService, private formBuilder: FormBuilder, private modalService: NgbModal) {
+  constructor(private houseService: HouseService,
+              private formBuilder: FormBuilder,
+              private modalService: NgbModal,
+              private authenticationService: AuthenticationService) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
