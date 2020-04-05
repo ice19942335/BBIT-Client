@@ -6,7 +6,7 @@ import {first} from 'rxjs/operators';
 import {Flat} from '../_models/flat';
 
 @Component({templateUrl: 'houseFlats.component.html'})
-export class HouseFlatsComponent implements OnInit{
+export class HouseFlatsComponent implements OnInit {
   houseId: string;
   house: House;
   flats: Flat[];

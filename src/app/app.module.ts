@@ -12,6 +12,7 @@ import {LoginComponent} from './login';
 import {HouseComponent} from './house';
 import {HouseFlatsComponent} from './houseFlats/houseFlats.component';
 import {FlatComponent} from './flat/flat.component';
+import {FlatTenantsComponent} from './flatTenants/flatTenants.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import {FlatComponent} from './flat/flat.component';
     LoginComponent,
     HouseComponent,
     HouseFlatsComponent,
-    FlatComponent
+    FlatComponent,
+    FlatTenantsComponent
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
@@ -36,5 +38,5 @@ import {FlatComponent} from './flat/flat.component';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+
+export class AppModule { }

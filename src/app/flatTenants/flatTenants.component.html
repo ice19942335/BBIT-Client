@@ -1,0 +1,54 @@
+<div class="card mt-4">
+  <h4 class="card-header text-center">BBIT House flats</h4>
+  <div class="card-body">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-12 py-4">
+          <div *ngIf="flatByIdLoading" class="spinner-border spinner-border-sm"></div>
+          <div *ngIf="!flatByIdLoading" class="card">
+            <div class="card-body">
+              <h5 class="card-title">House details</h5>
+              <p class="card-text mt-0 mb-0"><span class="font-weight-bold">Flat number:</span> {{flat.flatNumber}}
+              </p>
+              <p class="card-text mt-0 mb-0"><span class="font-weight-bold">House number:</span> {{flat.house.houseNumber}}
+              </p>
+              <p class="card-text mt-0 mb-0"><span class="font-weight-bold">Floor:</span> {{flat.level}}</p>
+              <p class="card-text mt-0 mb-0"><span class="font-weight-bold">Rooms:</span> {{flat.amountOfRooms}}</p>
+              <p class="card-text mt-0 mb-0"><span class="font-weight-bold">Tenants:</span> {{flat.amountOfTenants}}</p>
+              <p class="card-text mt-0 mb-0"><span class="font-weight-bold">Total Area:</span> {{flat.totalArea}}</p>
+              <p class="card-text mt-0 mb-0"><span class="font-weight-bold">Total Room:</span> {{flat.houseRoom}}</p></div>
+          </div>
+          <div *ngIf="flatByIdError" class="alert alert-danger mt-3 mb-0">{{flatByIdError}}</div>
+        </div>
+        <div class="col-md-12 py-4">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th hidden scope="col"></th>
+              <th scope="col">Name</th>
+              <th scope="col">Surname</th>
+              <th scope="col">Personal Code</th>
+              <th scope="col">Date Of Birth</th>
+              <th scope="col">Phone number</th>
+              <th scope="col">Email</th>
+            </tr>
+            </thead>
+            <tbody>
+            <div *ngIf="flatTenantsLoading" class="spinner-border spinner-border-sm"></div>
+            <tr *ngFor="let tenant of tenants">
+              <td hidden>{{ tenant.id }}</td>
+              <td>{{ tenant.name }}</td>
+              <td>{{ tenant.surname }}</td>
+              <td>{{ tenant.personalCode }}</td>
+              <td>{{ tenant.dateOfBirth }}</td>
+              <td>{{ tenant.phoneNumber }}</td>
+              <td>{{ tenant.email }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="flatTenantsError" class="alert alert-danger mt-3 mb-0">{{flatTenantsError}}</div>
+      </div>
+    </div>
+  </div>
+</div>
