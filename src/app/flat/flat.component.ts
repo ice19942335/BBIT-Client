@@ -9,7 +9,7 @@ import {first} from 'rxjs/operators';
 export class FlatComponent implements OnInit {
   currentUser: User;
   flats: Flat[];
-  house: Flat;
+  flat: Flat;
   apiResponseStatus: boolean;
   editFlatForm: FormGroup;
   loading: boolean;
@@ -54,17 +54,18 @@ export class FlatComponent implements OnInit {
 
   onSubmit() {
     this.modalService.dismissAll();
-    const formData = this.editFlatForm.getRawValue();
-    const flat = this.flats.find(x => x.id === formData.id);
+    const flatFromForm = this.editFlatForm.getRawValue() as Flat;
+    const flat = this.flats.find(x => x.id === flatFromForm.id);
 
-    this.flatService.updateFlat(formData).pipe(first()).subscribe(data => {
+    this.flatService.updateFlat(flatFromForm).pipe(first()).subscribe(data => {
         this.updating = false;
         if (data.status === true) {
-          this.updateLocalHouses(flat, formData);
+          this.updateLocalHouses(flat, flatFromForm);
         }
       },
       error => {
         this.error = error;
+        setTimeout(() => { this.error = undefined; }, 5000);
         this.updating = false;
       });
 

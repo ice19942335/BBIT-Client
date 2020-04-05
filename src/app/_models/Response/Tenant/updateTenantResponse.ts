@@ -1,12 +1,7 @@
 import {Flat} from '../../flat';
+import {Tenant} from '../../tenant';
 
 export class UpdateTenantResponse {
-  id: string;
-  name: string;
-  surname: string;
-  personalCode: string;
-  dateOfBirth: string;
-  phoneNumber: string;
-  email: string;
-  flat: Flat[];
+  status: boolean;
+  tenant: Tenant;
 }

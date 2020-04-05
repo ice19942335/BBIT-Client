@@ -1,6 +1,6 @@
 import {Flat} from '../../flat';
 
 export class FlatByIdResponse {
-  stats: boolean;
+  status: boolean;
   flat: Flat;
 }

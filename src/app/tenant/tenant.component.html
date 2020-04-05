@@ -1,0 +1,96 @@
+<div class="card mt-4">
+  <h4 class="card-header text-center">Tenant manager</h4>
+  <div class="card-body">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-12 py-4">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th hidden scope="col"></th>
+              <th scope="col">Name</th>
+              <th scope="col">Surname</th>
+              <th scope="col">Personal Code</th>
+              <th scope="col">Date Of Birth</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">Email</th>
+              <th *ngIf="currentUser" scope="col">Edit Tenant</th>
+            </tr>
+            </thead>
+            <tbody>
+            <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
+            <tr *ngFor="let tenant of tenants">
+              <td hidden>{{ tenant.id }}</td>
+              <td>{{ tenant.name }}</td>
+              <td>{{ tenant.surname }}</td>
+              <td>{{ tenant.personalCode }}</td>
+              <td>{{ tenant.dateOfBirth }}</td>
+              <td>{{ tenant.phoneNumber }}</td>
+              <td>{{ tenant.email }}</td>
+              <td *ngIf="currentUser">
+                <button type="button" class="btn btn-primary" (click)="openModal(editTenantModal, tenant)">Edit tenant</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+  </div>
+</div>
+
+<ng-template #editTenantModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="editProfileLabel">Edit Flat</h5>
+    <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="editTenantForm" (ngSubmit)="onSubmit()">
+      <div class="form-group row">
+        <label for="name" class="col-sm-4 col-form-label">Name</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="name" id="name">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="surname" class="col-sm-4 col-form-label">Surname</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="surname" id="surname">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="personalCode" class="col-sm-4 col-form-label">Personal Code</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="personalCode" id="personalCode">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="dateOfBirth" class="col-sm-4 col-form-label">Date Of Birth</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="dateOfBirth" id="dateOfBirth" placeholder="mm/dd/yyyy or m/d/yyyy">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="phoneNumber" class="col-sm-4 col-form-label">Phone number</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="phoneNumber" id="phoneNumber">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="email" class="col-sm-4 col-form-label">Email</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="email" id="email">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+

@@ -54,10 +54,11 @@ export class HouseComponent implements OnInit {
 
   onSubmit() {
     this.modalService.dismissAll();
-    const houseFromForm = this.editHouseForm.getRawValue();
+    const houseFromForm = this.editHouseForm.getRawValue() as House;
     const house = this.houses.find(x => x.id === houseFromForm.id);
 
-    this.houseService.updateHouse(houseFromForm).pipe(first()).subscribe(data => {
+    this.houseService.updateHouse(houseFromForm).pipe(first()).subscribe(
+      data => {
         this.loading = false;
         if (data.status === true) {
           this.updateLocalHouses(house, houseFromForm);
@@ -65,6 +66,7 @@ export class HouseComponent implements OnInit {
       },
       error => {
         this.error = error;
+        setTimeout(() => { this.error = undefined; }, 5000);
         this.loading = false;
     });
 
