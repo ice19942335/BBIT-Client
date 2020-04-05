@@ -104,7 +104,7 @@ export class TenantComponent implements OnInit {
       },
       error => {
         this.error = error;
-        this.loading = false;
+        setTimeout(() => { this.error = undefined; }, 5000);
       });
   }
 

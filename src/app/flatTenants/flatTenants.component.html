@@ -31,6 +31,7 @@
               <th scope="col">Date Of Birth</th>
               <th scope="col">Phone number</th>
               <th scope="col">Email</th>
+              <th *ngIf="currentUser" scope="col">Delete Tenant</th>
             </tr>
             </thead>
             <tbody>
@@ -43,10 +44,14 @@
               <td>{{ tenant.dateOfBirth }}</td>
               <td>{{ tenant.phoneNumber }}</td>
               <td>{{ tenant.email }}</td>
+              <td *ngIf="currentUser">
+                <button type="button" class="btn btn-danger" (click)="deleteTenant(tenant.id)">Delete</button>
+              </td>
             </tr>
             </tbody>
           </table>
         </div>
+        <div *ngIf="tenantDeletionError" class="alert alert-danger mt-3 mb-0">{{tenantDeletionError}}</div>
         <div *ngIf="flatTenantsError" class="alert alert-danger mt-3 mb-0">{{flatTenantsError}}</div>
       </div>
     </div>

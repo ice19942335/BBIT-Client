@@ -29,6 +29,7 @@
               <th scope="col">Amount Of Tenants</th>
               <th scope="col">Total Area</th>
               <th scope="col">House Room</th>
+              <th *ngIf="currentUser" scope="col">Delete Flat</th>
             </tr>
             </thead>
             <tbody>
@@ -41,10 +42,14 @@
               <td>{{ flat.amountOfTenants }}</td>
               <td>{{ flat.totalArea }}</td>
               <td>{{ flat.houseRoom }}</td>
+              <td *ngIf="currentUser">
+                <button type="button" class="btn btn-danger" (click)="deleteFlat(flat.id)">Delete</button>
+              </td>
             </tr>
             </tbody>
           </table>
         </div>
+        <div *ngIf="flatDeletionError" class="alert alert-danger mt-3 mb-0">{{flatDeletionError}}</div>
         <div *ngIf="houseFlatsError" class="alert alert-danger mt-3 mb-0">{{houseFlatsError}}</div>
       </div>
     </div>

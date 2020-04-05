@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {House} from '../_models';
-import {HouseService} from '../_services';
+import {House, User} from '../_models';
+import {AuthenticationService, FlatService, HouseService} from '../_services';
 import {first} from 'rxjs/operators';
 import {Flat} from '../_models/flat';
 
 @Component({templateUrl: 'houseFlats.component.html'})
 export class HouseFlatsComponent implements OnInit {
+  currentUser: User;
   houseId: string;
   house: House;
   flats: Flat[];
@@ -16,9 +17,15 @@ export class HouseFlatsComponent implements OnInit {
   houseByIdError: '';
   houseFlatsLoading = true;
   houseFlatsError: '';
+  flatDeletionError: string;
 
   constructor(private actRoute: ActivatedRoute,
-              private houseService: HouseService) {
+              private houseService: HouseService,
+              private authenticationService: AuthenticationService,
+              private flatService: FlatService
+  )
+  {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.houseId = this.actRoute.snapshot.params.id;
   }
 
@@ -57,5 +64,20 @@ export class HouseFlatsComponent implements OnInit {
         this.houseFlatsError = error;
         this.houseFlatsLoading = false;
       });
+  }
+
+  deleteFlat(id: string){
+    this.flatService.deleteFlat(id).pipe(first()).subscribe(
+      data => {
+        this.removeFromLocalFlats(id);
+      },
+      error => {
+        this.flatDeletionError = error;
+        setTimeout(() => { this.flatDeletionError = undefined; }, 5000);
+      });
+  }
+  removeFromLocalFlats(id: string) {
+    const flat = this.flats.find(x => x.id === id);
+    this.flats.splice(this.flats.indexOf(flat), 1);
   }
 }

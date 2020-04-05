@@ -19,7 +19,9 @@ export class HouseComponent implements OnInit {
   constructor(private houseService: HouseService,
               private formBuilder: FormBuilder,
               private modalService: NgbModal,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService
+  )
+  {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
@@ -105,7 +107,7 @@ export class HouseComponent implements OnInit {
       },
       error => {
         this.error = error;
-        this.loading = false;
+        setTimeout(() => { this.error = undefined; }, 5000);
       });
   }
   removeFromLocalHouses(id: string) {

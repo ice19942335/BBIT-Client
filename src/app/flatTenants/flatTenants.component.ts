@@ -1,11 +1,12 @@
 import {ActivatedRoute} from '@angular/router';
-import {FlatService} from '../_services';
+import {AuthenticationService, FlatService, TenantService} from '../_services';
 import {Component, OnInit} from '@angular/core';
-import {Flat, Tenant} from '../_models';
+import {Flat, Tenant, User} from '../_models';
 import {first} from 'rxjs/operators';
 
 @Component({templateUrl: 'flatTenants.component.html'})
 export class FlatTenantsComponent implements OnInit {
+  currentUser: User;
   flatId: string;
   flat: Flat;
   tenants: Tenant[];
@@ -15,9 +16,16 @@ export class FlatTenantsComponent implements OnInit {
   flatByIdError: '';
   flatTenantsLoading = true;
   flatTenantsError: '';
+  tenantDeletionError: string;
+
 
   constructor(private actRoute: ActivatedRoute,
-              private flatService: FlatService) {
+              private flatService: FlatService,
+              private authenticationService: AuthenticationService,
+              private tenantService: TenantService
+  )
+  {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.flatId = this.actRoute.snapshot.params.id;
   }
 
@@ -38,6 +46,7 @@ export class FlatTenantsComponent implements OnInit {
       },
       error => {
         this.flatByIdError = error;
+        setTimeout(() => { this.flatByIdError = undefined; }, 5000);
         this.flatByIdLoading = false;
       });
   }
@@ -54,7 +63,24 @@ export class FlatTenantsComponent implements OnInit {
       },
       error => {
         this.flatTenantsError = error;
+        setTimeout(() => { this.flatTenantsError = undefined; }, 5000);
         this.flatTenantsLoading = false;
       });
+  }
+
+  deleteTenant(id: string){
+    this.tenantService.deleteTenant(id).pipe(first()).subscribe(
+      data => {
+        this.removeFromLocalTenants(id);
+      },
+      error => {
+        this.tenantDeletionError = error;
+        setTimeout(() => { this.tenantDeletionError = undefined; }, 5000);
+      });
+  }
+
+  removeFromLocalTenants(id: string) {
+    const tenant = this.tenants.find(x => x.id === id);
+    this.tenants.splice(this.tenants.indexOf(tenant), 1);
   }
 }
