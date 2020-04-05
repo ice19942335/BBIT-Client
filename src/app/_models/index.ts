@@ -12,6 +12,9 @@ export * from './Response/Flat/flatTenantsResponse';
 export * from './Response/Flat/flatByIdResponse';
 export * from './Response/Flat/updateFlatResponse';
 export * from './Response/Flat/allFlatsResponse';
+export * from './Response/Tenant/allTenantsResponse';
+export * from './Response/Tenant/tenantByIdResponse';
+export * from './Response/Tenant/updateTenantResponse';
 
 // Requests models
 export * from './Request/Flat/updateFlatRequest';
