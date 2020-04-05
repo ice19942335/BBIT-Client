@@ -4,9 +4,8 @@
     <a class="nav-item nav-link" routerLink="/house">Houses</a>
     <a class="nav-item nav-link" routerLink="/flat">Flats</a>
     <a class="nav-item nav-link" routerLink="/tenant">Tenants</a>
-    <a *ngIf="currentUser" style="cursor: pointer;" class="nav-item nav-link" (click)="logout()">Logo
-      ut</a>
-    <a *ngIf="!currentUser" style="cursor: pointer;" class="nav-item nav-link" routerLink="/login">LogIn</a>
+    <a *ngIf="currentUser" style="cursor: pointer; ; color: #007bff" class="nav-item nav-link" (click)="logout()">Logout</a>
+    <a *ngIf="!currentUser" style="cursor: pointer; color: #007bff" class="nav-item nav-link" routerLink="/login">LogIn</a>
   </div>
 </nav>
 

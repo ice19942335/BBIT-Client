@@ -6,12 +6,14 @@ import { HouseComponent } from './house';
 import { AuthGuard } from './_helpers';
 import {HouseFlatsComponent} from './houseFlats/houseFlats.component';
 import {FlatComponent} from './flat/flat.component';
+import {FlatTenantsComponent} from './flatTenants';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'house', component: HouseComponent },
     { path: 'houseFlats/:id', component: HouseFlatsComponent },
     { path: 'flat', component: FlatComponent },
+    { path: 'flatTenants/:id', component: FlatTenantsComponent },
     { path: 'login', component: LoginComponent },
 
     // Example { path: 'flatsInHouse/:id', component: HouseFlatsComponent, canActivate: [AuthGuard] },

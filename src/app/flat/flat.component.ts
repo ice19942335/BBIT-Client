@@ -31,7 +31,6 @@ export class FlatComponent implements OnInit {
       flatNumber: [''],
       level: [''],
       amountOfRooms: [''],
-      amountOfTenants: [''],
       totalArea: [''],
       houseRoom: ['']
     });
@@ -48,7 +47,6 @@ export class FlatComponent implements OnInit {
       flatNumber: flat.flatNumber,
       level: flat.level,
       amountOfRooms: flat.amountOfRooms,
-      amountOfTenants: flat.amountOfTenants,
       totalArea: flat.totalArea,
       houseRoom: flat.houseRoom
     });
@@ -57,10 +55,6 @@ export class FlatComponent implements OnInit {
   onSubmit() {
     this.modalService.dismissAll();
     const formData = this.editFlatForm.getRawValue();
-    //
-    const updatedFlat = formData as Flat;
-    console.log(updatedFlat);
-    //
     const flat = this.flats.find(x => x.id === formData.id);
 
     this.flatService.updateFlat(formData).pipe(first()).subscribe(data => {
@@ -96,6 +90,10 @@ export class FlatComponent implements OnInit {
   updateLocalHouses(flatToReplace: Flat, newFlat: Flat) {
     const index = this.flats.indexOf(flatToReplace);
     if (index === -1) { return; }
-    this.flats[index] = newFlat;
+    this.flats[index].flatNumber = newFlat.flatNumber;
+    this.flats[index].level = newFlat.level;
+    this.flats[index].amountOfRooms = newFlat.amountOfRooms;
+    this.flats[index].totalArea = newFlat.totalArea;
+    this.flats[index].houseRoom = newFlat.houseRoom;
   }
 }

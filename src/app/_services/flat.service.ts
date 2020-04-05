@@ -3,8 +3,9 @@ import {HttpClient} from '@angular/common/http';
 
 import {environment} from '../../environments/environment';
 import {AllFlatsResponse} from '../_models/Response/Flat/allFlatsResponse';
-import {Flat} from '../_models';
-
+import {Flat, FlatTenantsResponse} from '../_models';
+import {FlatByIdResponse} from '../_models/Response/Flat/flatByIdResponse';
+import {UpdateFlatResponse} from '../_models/Response/Flat/updateFlatResponse';
 
 
 @Injectable({providedIn: 'root'})
