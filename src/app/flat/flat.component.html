@@ -1,5 +1,5 @@
 <div class="card mt-4">
-  <h4 class="card-header text-center">UpdateFlatRequest manager</h4>
+  <h4 class="card-header text-center">Flat manager</h4>
   <div class="card-body">
     <div class="container">
       <div class="row justify-content-center">
@@ -8,6 +8,7 @@
             <thead>
             <tr>
               <th hidden scope="col"></th>
+              <th scope="col">House Number</th>
               <th scope="col">Flat Number</th>
               <th scope="col">Floor</th>
               <th scope="col">Rooms</th>
@@ -22,6 +23,7 @@
             <div *ngIf="loading" class="spinner-border spinner-border-sm"></div>
             <tr *ngFor="let flat of flats">
               <td hidden>{{ flat.id }}</td>
+              <td>{{ flat.house.houseNumber }}</td>
               <td>{{ flat.flatNumber }}</td>
               <td>{{ flat.level }}</td>
               <td>{{ flat.amountOfRooms }}</td>
@@ -46,7 +48,7 @@
 
 <ng-template #editFlatModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title" id="editProfileLabel">Edit UpdateFlatRequest</h5>
+    <h5 class="modal-title" id="editProfileLabel">Edit Flat</h5>
     <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
