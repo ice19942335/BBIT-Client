@@ -96,4 +96,20 @@ export class TenantComponent implements OnInit {
     if (index === -1) { return; }
     this.tenants[index] = newTenant;
   }
+
+  deleteTenant(id: string){
+    this.tenantService.deleteTenant(id).pipe(first()).subscribe(
+      data => {
+        this.removeFromLocalTenants(id);
+      },
+      error => {
+        this.error = error;
+        this.loading = false;
+      });
+  }
+
+  removeFromLocalTenants(id: string) {
+    const tenant = this.tenants.find(x => x.id === id);
+    this.tenants.splice(this.tenants.indexOf(tenant), 1);
+  }
 }

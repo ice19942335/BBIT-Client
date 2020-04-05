@@ -25,4 +25,8 @@ export class HouseService {
   updateHouse(house: House) {
     return this.http.put<UpdateHouseResponse>(`${environment.apiUrl}houses`, house);
   }
+
+  deleteHouse(id: string) {
+    return this.http.delete(`${environment.apiUrl}houses/${id}`);
+  }
 }

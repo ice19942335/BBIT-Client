@@ -15,6 +15,7 @@
               <th scope="col">Post-Code</th>
               <th scope="col">Flats In House</th>
               <th *ngIf="currentUser" scope="col">Edit House</th>
+              <th *ngIf="currentUser" scope="col">Delete House</th>
             </tr>
             </thead>
             <tbody>
@@ -30,7 +31,10 @@
                 <a type="button" class="btn btn-success" [routerLink]="['/houseFlats', house.id]">View flats</a>
               </td>
               <td *ngIf="currentUser">
-                <button type="button" class="btn btn-primary" (click)="openModal(editHouseModal, house)">Edit house</button>
+                <button type="button" class="btn btn-primary" (click)="openModal(editHouseModal, house)">Edit</button>
+              </td>
+              <td *ngIf="currentUser">
+                <button type="button" class="btn btn-danger" (click)="deleteHouse(house.id)">Delete</button>
               </td>
             </tr>
             </tbody>

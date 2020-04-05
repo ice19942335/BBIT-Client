@@ -97,4 +97,19 @@ export class FlatComponent implements OnInit {
     this.flats[index].totalArea = newFlat.totalArea;
     this.flats[index].houseRoom = newFlat.houseRoom;
   }
+
+  deleteFlat(id: string){
+    this.flatService.deleteFlat(id).pipe(first()).subscribe(
+      data => {
+        this.removeFromLocalFlats(id);
+      },
+      error => {
+        this.error = error;
+        this.loading = false;
+      });
+  }
+  removeFromLocalFlats(id: string) {
+    const flat = this.flats.find(x => x.id === id);
+    this.flats.splice(this.flats.indexOf(flat), 1);
+  }
 }

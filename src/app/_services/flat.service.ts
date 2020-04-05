@@ -27,4 +27,8 @@ export class FlatService {
   updateFlat(flat: Flat) {
     return this.http.put<UpdateFlatResponse>(`${environment.apiUrl}flats`, flat);
   }
+
+  deleteFlat(id: string) {
+    return this.http.delete(`${environment.apiUrl}flats/${id}`);
+  }
 }

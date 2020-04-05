@@ -97,4 +97,19 @@ export class HouseComponent implements OnInit {
 
     this.houses[index] = newHouse;
   }
+
+  deleteHouse(id: string){
+    this.houseService.deleteHouse(id).pipe(first()).subscribe(
+      data => {
+        this.removeFromLocalHouses(id);
+      },
+      error => {
+        this.error = error;
+        this.loading = false;
+      });
+  }
+  removeFromLocalHouses(id: string) {
+    const house = this.houses.find(x => x.id === id);
+    this.houses.splice(this.houses.indexOf(house), 1);
+  }
 }

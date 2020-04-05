@@ -16,6 +16,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         // auto logout if 401 response returned from api
         this.authenticationService.logout();
         location.replace('/login');
+        return throwError('Please authorize');
       } else if (err.status === 400) {
         if (err.error.errors === undefined) {
           return throwError(err.error);

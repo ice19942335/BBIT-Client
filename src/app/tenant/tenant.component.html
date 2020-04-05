@@ -14,7 +14,8 @@
               <th scope="col">Date Of Birth</th>
               <th scope="col">Phone Number</th>
               <th scope="col">Email</th>
-              <th *ngIf="currentUser" scope="col">Edit Tenant</th>
+              <th *ngIf="currentUser" scope="col">Edit</th>
+              <th *ngIf="currentUser" scope="col">Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -29,6 +30,9 @@
               <td>{{ tenant.email }}</td>
               <td *ngIf="currentUser">
                 <button type="button" class="btn btn-primary" (click)="openModal(editTenantModal, tenant)">Edit tenant</button>
+              </td>
+              <td *ngIf="currentUser">
+                <button type="button" class="btn btn-danger" (click)="deleteTenant(tenant.id)">Delete</button>
               </td>
             </tr>
             </tbody>

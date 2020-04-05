@@ -16,7 +16,8 @@
               <th scope="col">Total Area</th>
               <th scope="col">House Room</th>
               <th scope="col">View tenants</th>
-              <th *ngIf="currentUser" scope="col">Edit Flat</th>
+              <th *ngIf="currentUser" scope="col">Edit</th>
+              <th *ngIf="currentUser" scope="col">Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -34,7 +35,10 @@
                 <a type="button" class="btn btn-success" [routerLink]="['/flatTenants', flat.id]">View tenants</a>
               </td>
               <td *ngIf="currentUser">
-                <button type="button" class="btn btn-primary" (click)="openModal(editFlatModal, flat)">Edit flat</button>
+                <button type="button" class="btn btn-primary" (click)="openModal(editFlatModal, flat)">Edit</button>
+              </td>
+              <td *ngIf="currentUser">
+                <button type="button" class="btn btn-danger" (click)="deleteFlat(flat.id)">Delete</button>
               </td>
             </tr>
             </tbody>

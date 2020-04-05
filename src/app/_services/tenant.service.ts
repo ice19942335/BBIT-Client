@@ -18,4 +18,8 @@ export class TenantService {
   updateTenant(tenant: Tenant) {
     return this.http.put<UpdateTenantResponse>(`${environment.apiUrl}tenants`, tenant);
   }
+
+  deleteTenant(id: string) {
+    return this.http.delete(`${environment.apiUrl}tenants/${id}`);
+  }
 }
