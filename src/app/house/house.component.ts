@@ -21,8 +21,7 @@ export class HouseComponent implements OnInit {
               private formBuilder: FormBuilder,
               private modalService: NgbModal,
               private authenticationService: AuthenticationService
-  )
-  {
+  ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
@@ -78,9 +77,11 @@ export class HouseComponent implements OnInit {
       },
       error => {
         this.error = error;
-        setTimeout(() => { this.error = undefined; }, 5000);
+        setTimeout(() => {
+          this.error = undefined;
+        }, 5000);
         this.loading = false;
-    });
+      });
 
     this.apiResponseStatus = undefined;
   }
@@ -99,6 +100,7 @@ export class HouseComponent implements OnInit {
         this.error = error;
         this.loading = false;
       });
+    this.apiResponseStatus = undefined;
   }
 
   updateLocalHouses(houseToReplace: House, newHouse: House) {
@@ -110,16 +112,19 @@ export class HouseComponent implements OnInit {
     this.houses[index] = newHouse;
   }
 
-  deleteHouse(id: string){
+  deleteHouse(id: string) {
     this.houseService.deleteHouse(id).pipe(first()).subscribe(
       data => {
         this.removeFromLocalHouses(id);
       },
       error => {
         this.error = error;
-        setTimeout(() => { this.error = undefined; }, 5000);
+        setTimeout(() => {
+          this.error = undefined;
+        }, 5000);
       });
   }
+
   removeFromLocalHouses(id: string) {
     const house = this.houses.find(x => x.id === id);
     this.houses.splice(this.houses.indexOf(house), 1);
@@ -139,18 +144,30 @@ export class HouseComponent implements OnInit {
     this.houseService.createHouse(houseFromForm).pipe(first()).subscribe(
       data => {
         this.loading = false;
+        this.createHouseFormClearValues();
         this.addHouseToLocalList(data as House);
       },
       error => {
         this.error = error;
-        setTimeout(() => { this.error = undefined; }, 5000);
+        setTimeout(() => {
+          this.error = undefined;
+        }, 5000);
         this.loading = false;
       });
-
-    this.apiResponseStatus = undefined;
   }
 
   addHouseToLocalList(house: House) {
     this.houses.push(house);
+  }
+
+  createHouseFormClearValues() {
+    this.createHouseForm.patchValue({
+      id: null,
+      houseNumber: null,
+      streetName: null,
+      city: null,
+      country: null,
+      postCode: null,
+    });
   }
 }

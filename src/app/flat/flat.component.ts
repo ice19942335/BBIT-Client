@@ -1,17 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {Flat, User} from '../_models';
+import {Flat, House, User} from '../_models';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {AuthenticationService, FlatService} from '../_services';
+import {AuthenticationService, FlatService, HouseService} from '../_services';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {first} from 'rxjs/operators';
+import {CreateFlatRequest} from '../_models/Request/Flat/createFlatRequest';
 
 @Component({templateUrl: 'flat.component.html'})
 export class FlatComponent implements OnInit {
   currentUser: User;
   flats: Flat[];
+  houses: House[];
   flat: Flat;
   apiResponseStatus: boolean;
   editFlatForm: FormGroup;
+  createFlatForm: FormGroup;
   loading: boolean;
   updating: boolean;
   error: '';
@@ -19,7 +22,8 @@ export class FlatComponent implements OnInit {
   constructor(private flatService: FlatService,
               private formBuilder: FormBuilder,
               private modalService: NgbModal,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private houseService: HouseService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
@@ -34,9 +38,39 @@ export class FlatComponent implements OnInit {
       totalArea: [''],
       houseRoom: ['']
     });
+
+    this.createFlatForm = this.formBuilder.group({
+      id: [''],
+      houseId: [''],
+      flatNumber: [''],
+      level: [''],
+      amountOfRooms: [''],
+      amountOfTenants: [''],
+      totalArea: [''],
+      houseRoom: ['']
+    });
+
+    this.loadHouses();
   }
 
-  openModal(targetModal, flat) {
+  loadHouses() {
+    this.houseService.getAllHouses().pipe(first()).subscribe(
+      data => {
+        this.loading = false;
+        this.apiResponseStatus = data.status;
+        if (this.apiResponseStatus) {
+          this.houses = data.houses;
+          this.apiResponseStatus = false;
+        }
+      },
+      error => {
+        this.error = error;
+        this.loading = false;
+      });
+    this.apiResponseStatus = undefined;
+  }
+
+  openModalFlatEdit(targetModal, flat) {
     this.modalService.open(targetModal, {
       centered: true,
       backdrop: 'static'
@@ -52,7 +86,7 @@ export class FlatComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmitFlatEdit() {
     this.modalService.dismissAll();
     const flatFromForm = this.editFlatForm.getRawValue() as Flat;
     const flat = this.flats.find(x => x.id === flatFromForm.id);
@@ -108,8 +142,50 @@ export class FlatComponent implements OnInit {
         setTimeout(() => { this.error = undefined; }, 5000);
       });
   }
+
   removeFromLocalFlats(id: string) {
     const flat = this.flats.find(x => x.id === id);
     this.flats.splice(this.flats.indexOf(flat), 1);
+  }
+
+  openModalCreateFlat(targetModal) {
+    this.modalService.open(targetModal, {
+      centered: true,
+      backdrop: 'static'
+    });
+  }
+
+  onSubmitCreateFlat() {
+    this.modalService.dismissAll();
+    const flatFromForm = this.createFlatForm.getRawValue() as CreateFlatRequest;
+
+    this.flatService.createFlat(flatFromForm).pipe(first()).subscribe(
+      data => {
+        this.loading = false;
+        this.createHouseFormClearValues();
+        this.addFlatToLocalList(data as Flat);
+      },
+      error => {
+        this.error = error;
+        setTimeout(() => { this.error = undefined; }, 5000);
+        this.loading = false;
+      });
+  }
+
+  addFlatToLocalList(flat: Flat) {
+    this.flats.push(flat);
+  }
+
+  createHouseFormClearValues() {
+    this.createFlatForm.patchValue({
+      id: null,
+      houseId: null,
+      flatNumber: null,
+      level: null,
+      amountOfRooms: null,
+      amountOfTenants: null,
+      totalArea: null,
+      houseRoom: null
+    });
   }
 }

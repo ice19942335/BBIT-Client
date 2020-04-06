@@ -2,15 +2,20 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {environment} from '../../environments/environment';
-import {AllFlatsResponse} from '../_models/Response/Flat/allFlatsResponse';
+import {AllFlatsResponse} from '../_models';
 import {Flat, FlatTenantsResponse} from '../_models';
-import {FlatByIdResponse} from '../_models/Response/Flat/flatByIdResponse';
-import {UpdateFlatResponse} from '../_models/Response/Flat/updateFlatResponse';
+import {FlatByIdResponse} from '../_models';
+import {UpdateFlatResponse} from '../_models';
+import {CreateFlatRequest} from '../_models/Request/Flat/createFlatRequest';
 
 
 @Injectable({providedIn: 'root'})
 export class FlatService {
   constructor(private http: HttpClient) { }
+
+  createFlat(flat: CreateFlatRequest) {
+    return this.http.post<Flat>(`${environment.apiUrl}flats`, flat);
+  }
 
   getAllFlats() {
     return this.http.get<AllFlatsResponse>(`${environment.apiUrl}flats`);

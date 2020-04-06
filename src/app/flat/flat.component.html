@@ -4,6 +4,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-12 py-4">
+          <button *ngIf="currentUser" type="button" class="btn btn-primary mb-3" (click)="openModalCreateFlat(createFlatModal)">Create new</button>
           <table class="table table-striped">
             <thead>
             <tr>
@@ -35,7 +36,7 @@
                 <a type="button" class="btn btn-success" [routerLink]="['/flatDetails', flat.id]">Details</a>
               </td>
               <td *ngIf="currentUser">
-                <button type="button" class="btn btn-primary" (click)="openModal(editFlatModal, flat)">Edit</button>
+                <button type="button" class="btn btn-primary" (click)="openModalFlatEdit(editFlatModal, flat)">Edit</button>
               </td>
               <td *ngIf="currentUser">
                 <button type="button" class="btn btn-danger" (click)="deleteFlat(flat.id)">Delete</button>
@@ -59,7 +60,7 @@
   </div>
 
   <div class="modal-body">
-    <form [formGroup]="editFlatForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="editFlatForm" (ngSubmit)="onSubmitFlatEdit()">
       <div class="form-group row">
         <label for="flatNumber" class="col-sm-4 col-form-label">Flat Number</label>
         <div class="col-sm-8">
@@ -93,6 +94,64 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
         <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #createFlatModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Create New Flat</h5>
+    <button type="button" class="close" (click)="modal.dismiss()" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="createFlatForm" (ngSubmit)="onSubmitCreateFlat()">
+      <div class="form-group row">
+        <label for="createHouseId" class="col-sm-4 col-form-label">House</label>
+        <div class="col-sm-8">
+          <select formControlName="houseId" class="browser-default custom-select" id="createHouseId">
+            <option *ngFor="let house of houses" [value]="house.id">
+              {{ house.houseNumber }}, {{ house.streetName }}, {{ house.city }}, {{ house.country }}, {{ house.postCode }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="createFlatNumber" class="col-sm-4 col-form-label">Flat Number</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" formControlName="flatNumber" id="createFlatNumber">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="createLevel" class="col-sm-4 col-form-label">Floor</label>
+        <div class="col-sm-8">
+          <input type="number" class="form-control" formControlName="level" id="createLevel">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="createAmountOfRooms" class="col-sm-4 col-form-label">Rooms</label>
+        <div class="col-sm-8">
+          <input type="number" class="form-control" formControlName="amountOfRooms" id="createAmountOfRooms">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="createTotalArea" class="col-sm-4 col-form-label">Total Area</label>
+        <div class="col-sm-8">
+          <input type="number" class="form-control" formControlName="totalArea" id="createTotalArea">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="createHouseRoom" class="col-sm-4 col-form-label">House Room</label>
+        <div class="col-sm-8">
+          <input type="number" class="form-control" formControlName="houseRoom" id="createHouseRoom">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Close</button>
+        <button type="submit" class="btn btn-primary">Create</button>
       </div>
     </form>
   </div>
