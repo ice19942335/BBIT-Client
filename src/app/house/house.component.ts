@@ -64,7 +64,7 @@ export class HouseComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmitEditHouse() {
     this.modalService.dismissAll();
     const houseFromForm = this.editHouseForm.getRawValue() as House;
     const house = this.houses.find(x => x.id === houseFromForm.id);

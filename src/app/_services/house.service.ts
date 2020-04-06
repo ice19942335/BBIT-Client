@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {environment} from '../../environments/environment';
-import {AllHousesResponse, CreateHouseRequest, CreateHouseResponse, House, HouseFlatsResponse, UpdateHouseRequest} from '../_models';
+import {AllHousesResponse, CreateHouseRequest, House, HouseFlatsResponse, UpdateHouseRequest} from '../_models';
 import {HouseByIdResponse} from '../_models/Response/House/houseByIdResponse';
 import {UpdateHouseResponse} from '../_models';
 
@@ -11,7 +11,7 @@ export class HouseService {
   constructor(private http: HttpClient) { }
 
   createHouse(house: CreateHouseRequest) {
-    return this.http.post<CreateHouseResponse>(`${environment.apiUrl}houses`, house);
+    return this.http.post<House>(`${environment.apiUrl}houses`, house);
   }
 
   getAllHouses() {
