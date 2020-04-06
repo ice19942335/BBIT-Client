@@ -163,10 +163,6 @@ export class TenantComponent implements OnInit {
     this.modalService.dismissAll();
     const newTenant = this.createTenantForm.getRawValue() as CreateTenantRequest;
 
-    //
-    console.log(newTenant);
-    //
-
     this.tenantService.createTenant(newTenant).pipe(first()).subscribe(
       data => {
         this.createTenantFormClearValues();
