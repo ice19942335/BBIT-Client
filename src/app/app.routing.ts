@@ -4,17 +4,17 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { HouseComponent } from './house';
 import { AuthGuard } from './_helpers';
-import {HouseFlatsComponent} from './houseFlats';
+import {HouseDetailsComponent} from './houseDetails';
 import {FlatComponent} from './flat';
-import {FlatTenantsComponent} from './flatTenants';
+import {FlatDetailsComponent} from './flatDetails';
 import {TenantComponent} from './tenant';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'house', component: HouseComponent },
-    { path: 'houseFlats/:id', component: HouseFlatsComponent },
+    { path: 'houseDetails/:id', component: HouseDetailsComponent },
     { path: 'flat', component: FlatComponent },
-    { path: 'flatTenants/:id', component: FlatTenantsComponent },
+    { path: 'flatDetails/:id', component: FlatDetailsComponent },
     { path: 'tenant', component: TenantComponent },
     { path: 'login', component: LoginComponent },
 

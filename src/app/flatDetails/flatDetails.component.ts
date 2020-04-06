@@ -4,8 +4,8 @@ import {Component, OnInit} from '@angular/core';
 import {Flat, Tenant, User} from '../_models';
 import {first} from 'rxjs/operators';
 
-@Component({templateUrl: 'flatTenants.component.html'})
-export class FlatTenantsComponent implements OnInit {
+@Component({templateUrl: 'flatDetails.component.html'})
+export class FlatDetailsComponent implements OnInit {
   currentUser: User;
   flatId: string;
   flat: Flat;

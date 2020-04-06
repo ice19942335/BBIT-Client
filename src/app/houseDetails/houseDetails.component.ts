@@ -3,10 +3,10 @@ import {ActivatedRoute} from '@angular/router';
 import {House, User} from '../_models';
 import {AuthenticationService, FlatService, HouseService} from '../_services';
 import {first} from 'rxjs/operators';
-import {Flat} from '../_models/flat';
+import {Flat} from '../_models';
 
-@Component({templateUrl: 'houseFlats.component.html'})
-export class HouseFlatsComponent implements OnInit {
+@Component({templateUrl: 'houseDetails.component.html'})
+export class HouseDetailsComponent implements OnInit {
   currentUser: User;
   houseId: string;
   house: House;

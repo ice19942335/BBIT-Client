@@ -10,9 +10,9 @@ import {JwtInterceptor, ErrorInterceptor} from './_helpers';
 import {HomeComponent} from './home';
 import {LoginComponent} from './login';
 import {HouseComponent} from './house';
-import {HouseFlatsComponent} from './houseFlats';
+import {HouseDetailsComponent} from './houseDetails';
 import {FlatComponent} from './flat';
-import {FlatTenantsComponent} from './flatTenants';
+import {FlatDetailsComponent} from './flatDetails';
 import {TenantComponent} from './tenant';
 
 @NgModule({
@@ -29,9 +29,9 @@ import {TenantComponent} from './tenant';
     HomeComponent,
     LoginComponent,
     HouseComponent,
-    HouseFlatsComponent,
+    HouseDetailsComponent,
     FlatComponent,
-    FlatTenantsComponent,
+    FlatDetailsComponent,
     TenantComponent
   ],
   providers: [

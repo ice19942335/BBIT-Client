@@ -15,7 +15,7 @@
               <th scope="col">Tenants</th>
               <th scope="col">Total Area</th>
               <th scope="col">House Room</th>
-              <th scope="col">View tenants</th>
+              <th scope="col">View Details</th>
               <th *ngIf="currentUser" scope="col">Edit</th>
               <th *ngIf="currentUser" scope="col">Delete</th>
             </tr>
@@ -32,7 +32,7 @@
               <td>{{ flat.totalArea }}</td>
               <td>{{ flat.houseRoom }}</td>
               <td>
-                <a type="button" class="btn btn-success" [routerLink]="['/flatTenants', flat.id]">View tenants</a>
+                <a type="button" class="btn btn-success" [routerLink]="['/flatDetails', flat.id]">Details</a>
               </td>
               <td *ngIf="currentUser">
                 <button type="button" class="btn btn-primary" (click)="openModal(editFlatModal, flat)">Edit</button>
