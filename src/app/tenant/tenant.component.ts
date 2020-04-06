@@ -1,18 +1,21 @@
 import {Component, OnInit} from '@angular/core';
-import {Flat, Tenant, User} from '../_models';
+import {CreateTenantRequest, Flat, Tenant, User} from '../_models';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {AuthenticationService, TenantService} from '../_services';
+import {AuthenticationService, FlatService, TenantService} from '../_services';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {first} from 'rxjs/operators';
 import {throwError} from 'rxjs';
+import {CreateFlatRequest} from '../_models/Request/Flat/createFlatRequest';
 
 @Component({templateUrl: 'tenant.component.html'})
 export class TenantComponent implements OnInit {
   currentUser: User;
   tenants: Tenant[];
   tenant: Tenant;
+  flats: Flat[];
   apiResponseStatus: boolean;
   editTenantForm: FormGroup;
+  createTenantForm: FormGroup;
   loading: boolean;
   updating: boolean;
   error: '';
@@ -20,13 +23,14 @@ export class TenantComponent implements OnInit {
   constructor(private tenantService: TenantService,
               private formBuilder: FormBuilder,
               private modalService: NgbModal,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private flatService: FlatService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
     this.loading = true;
-    this.loadTenants();
+
     this.editTenantForm = this.formBuilder.group({
       id: [''],
       name: [''],
@@ -36,6 +40,19 @@ export class TenantComponent implements OnInit {
       phoneNumber: [''],
       email: ['']
     });
+
+    this.createTenantForm = this.formBuilder.group({
+      flatId: [''],
+      name: [''],
+      surname: [''],
+      personalCode: [''],
+      dateOfBirth: [''],
+      phoneNumber: [''],
+      email: ['']
+    });
+
+    this.loadTenants();
+    this.loadFlats();
   }
 
   openModal(targetModal, tenant) {
@@ -55,7 +72,7 @@ export class TenantComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmitEditTenant() {
     this.modalService.dismissAll();
     const tenantFromForm = this.editTenantForm.getRawValue() as Tenant;
     const tenant = this.tenants.find(x => x.id === tenantFromForm.id);
@@ -68,7 +85,9 @@ export class TenantComponent implements OnInit {
       },
       error => {
         this.error = error;
-        setTimeout(() => { this.error = undefined; }, 5000);
+        setTimeout(() => {
+          this.error = undefined;
+        }, 5000);
         this.updating = false;
       });
 
@@ -91,25 +110,89 @@ export class TenantComponent implements OnInit {
       });
   }
 
+  loadFlats() {
+    this.flatService.getAllFlats().pipe(first()).subscribe(
+      data => {
+        this.loading = false;
+        this.apiResponseStatus = data.status;
+        if (this.apiResponseStatus) {
+          this.flats = data.flats;
+          this.apiResponseStatus = false;
+        }
+      },
+      error => {
+        this.error = error;
+        this.loading = false;
+      });
+  }
+
   updateLocalTenant(tenantToReplace: Tenant, newTenant: Tenant) {
     const index = this.tenants.indexOf(tenantToReplace);
-    if (index === -1) { return; }
+    if (index === -1) {
+      return;
+    }
     this.tenants[index] = newTenant;
   }
 
-  deleteTenant(id: string){
+  deleteTenant(id: string) {
     this.tenantService.deleteTenant(id).pipe(first()).subscribe(
       data => {
         this.removeFromLocalTenants(id);
       },
       error => {
         this.error = error;
-        setTimeout(() => { this.error = undefined; }, 5000);
+        setTimeout(() => {
+          this.error = undefined;
+        }, 5000);
       });
   }
 
   removeFromLocalTenants(id: string) {
     const tenant = this.tenants.find(x => x.id === id);
     this.tenants.splice(this.tenants.indexOf(tenant), 1);
+  }
+
+  openModalCreateTenant(targetModal) {
+    this.modalService.open(targetModal, {
+      centered: true,
+      backdrop: 'static'
+    });
+  }
+
+  onSubmitCreateTenant() {
+    this.modalService.dismissAll();
+    const newTenant = this.createTenantForm.getRawValue() as CreateTenantRequest;
+
+    //
+    console.log(newTenant);
+    //
+
+    this.tenantService.createTenant(newTenant).pipe(first()).subscribe(
+      data => {
+        this.createTenantFormClearValues();
+        this.addTenantToLocalList(data as Tenant);
+      },
+      error => {
+        this.error = error;
+        setTimeout(() => {
+          this.error = undefined;
+        }, 5000);
+      });
+  }
+
+  addTenantToLocalList(tenant: Tenant) {
+    this.tenants.push(tenant);
+  }
+
+  createTenantFormClearValues() {
+    this.createTenantForm.patchValue({
+      flatId: null,
+      name: null,
+      surname: null,
+      personalCode: null,
+      dateOfBirth: null,
+      phoneNumber: null,
+      email: null,
+    });
   }
 }

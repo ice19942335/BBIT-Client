@@ -143,7 +143,6 @@ export class HouseComponent implements OnInit {
 
     this.houseService.createHouse(houseFromForm).pipe(first()).subscribe(
       data => {
-        this.loading = false;
         this.createHouseFormClearValues();
         this.addHouseToLocalList(data as House);
       },
@@ -152,7 +151,6 @@ export class HouseComponent implements OnInit {
         setTimeout(() => {
           this.error = undefined;
         }, 5000);
-        this.loading = false;
       });
   }
 

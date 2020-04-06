@@ -20,4 +20,5 @@ export * from './Response/Tenant/updateTenantResponse';
 export * from './Request/Flat/updateFlatRequest';
 export * from './Request/House/createHouseRequest';
 export * from './Request/House/updateHouseRequest';
+export * from './Request/Tenant/createTenantRequest';
 

@@ -1,11 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {AllTenantsResponse, Tenant, TenantByIdResponse, UpdateTenantResponse} from '../_models';
+import {AllTenantsResponse, CreateTenantRequest, Flat, Tenant, TenantByIdResponse, UpdateTenantResponse} from '../_models';
 import {environment} from '../../environments/environment';
+import {CreateFlatRequest} from '../_models/Request/Flat/createFlatRequest';
+import {first} from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 export class TenantService {
   constructor(private http: HttpClient) { }
+
+  createTenant(tenant: CreateTenantRequest) {
+    return this.http.post<Tenant>(`${environment.apiUrl}tenants`, tenant);
+  }
 
   getAllTenants() {
     return this.http.get<AllTenantsResponse>(`${environment.apiUrl}tenants`);

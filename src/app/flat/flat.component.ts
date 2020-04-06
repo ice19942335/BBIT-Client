@@ -161,14 +161,12 @@ export class FlatComponent implements OnInit {
 
     this.flatService.createFlat(flatFromForm).pipe(first()).subscribe(
       data => {
-        this.loading = false;
         this.createHouseFormClearValues();
         this.addFlatToLocalList(data as Flat);
       },
       error => {
         this.error = error;
         setTimeout(() => { this.error = undefined; }, 5000);
-        this.loading = false;
       });
   }
 

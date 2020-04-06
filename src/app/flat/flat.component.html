@@ -112,7 +112,7 @@
       <div class="form-group row">
         <label for="createHouseId" class="col-sm-4 col-form-label">House</label>
         <div class="col-sm-8">
-          <select formControlName="houseId" class="browser-default custom-select" id="createHouseId">
+          <select formControlName="houseId" class="form-control" id="createHouseId">
             <option *ngFor="let house of houses" [value]="house.id">
               {{ house.houseNumber }}, {{ house.streetName }}, {{ house.city }}, {{ house.country }}, {{ house.postCode }}
             </option>
