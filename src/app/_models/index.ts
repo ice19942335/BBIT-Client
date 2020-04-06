@@ -18,4 +18,6 @@ export * from './Response/Tenant/updateTenantResponse';
 
 // Requests models
 export * from './Request/Flat/updateFlatRequest';
+export * from './Request/House/createHouseRequest';
+export * from './Request/House/updateHouseRequest';
 

@@ -13,6 +13,7 @@ export class HouseComponent implements OnInit {
   house: House;
   apiResponseStatus: boolean;
   editHouseForm: FormGroup;
+  createHouseForm: FormGroup;
   loading: boolean;
   error: '';
 
@@ -36,9 +37,18 @@ export class HouseComponent implements OnInit {
       country: [''],
       postCode: ['']
     });
+
+    this.createHouseForm = this.formBuilder.group({
+      id: [''],
+      houseNumber: [''],
+      streetName: [''],
+      city: [''],
+      country: [''],
+      postCode: ['']
+    });
   }
 
-  openModal(targetModal, house) {
+  openModalEditHouse(targetModal, house) {
     this.modalService.open(targetModal, {
       centered: true,
       backdrop: 'static'
@@ -113,5 +123,34 @@ export class HouseComponent implements OnInit {
   removeFromLocalHouses(id: string) {
     const house = this.houses.find(x => x.id === id);
     this.houses.splice(this.houses.indexOf(house), 1);
+  }
+
+  openModalCreateHouse(targetModal) {
+    this.modalService.open(targetModal, {
+      centered: true,
+      backdrop: 'static'
+    });
+  }
+
+  onSubmitCreateHouse() {
+    this.modalService.dismissAll();
+    const houseFromForm = this.createHouseForm.getRawValue() as House;
+
+    this.houseService.createHouse(houseFromForm).pipe(first()).subscribe(
+      data => {
+        this.loading = false;
+        this.addHouseToLocalList(data as House);
+      },
+      error => {
+        this.error = error;
+        setTimeout(() => { this.error = undefined; }, 5000);
+        this.loading = false;
+      });
+
+    this.apiResponseStatus = undefined;
+  }
+
+  addHouseToLocalList(house: House) {
+    this.houses.push(house);
   }
 }
